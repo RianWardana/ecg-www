@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang='en'>
+    <head>
+        <meta charset='utf-8'>
+        <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+        <meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no'>
+        <title>Hart ECG</title>
+
+        <style>
+            body {
+                margin: 0;
+                font-family: 'Roboto', 'Noto', sans-serif;
+                background-color: #f7f7f7;
+                padding: 10vw;
+            }
+
+            body > * {
+                box-sizing: border-box;
+                margin-bottom: 10px;
+                width: 100%;
+                padding: 8px;
+                text-align: center;
+            }
+        </style>
+        <script type="text/javascript" src="moment.min.js"></script>
+        <script type="text/javascript" src="Chart.min.js"></script>
+        <script type="text/javascript" src="chartjs-plugin-streaming.min.js"></script>
+    </head>
+
+    <body>
+        <canvas id="myChart"></canvas>
+        <script>
+            var ctx = document.getElementById('myChart').getContext('2d');
+            var chart = new Chart(ctx, {
+                type: 'line',
+
+                data: {
+                    // labels: ["January", "February", "March", "April", "May", "June", "July"],
+                    datasets: [{
+                        label: "Heart Signal",
+                        // backgroundColor: 'rgb(255, 99, 132)',
+                        // borderColor: 'rgb(255, 99, 132)',
+                        data: [/*0, 10, 5, 2, 20, 30, 45*/]
+                    }]
+                },
+
+                options: {
+                    scales: {
+                        xAxes: [{
+                            type: 'realtime'
+                        }]
+                    },
+                    plugins: {
+                        streaming: {
+                            refresh: 100,
+                            duration: 10000,
+                            frameRate: 30,
+                            delay: 500,
+                            onRefresh: function(chart) {
+                                chart.data.datasets.forEach(function(dataset) {
+                                    dataset.data.push({
+                                        x: Date.now(),
+                                        y: Math.random()
+                                    });
+                                });
+                            }
+                        }
+                    }
+                }
+            });
+        </script>
+    </body>
+</html>
