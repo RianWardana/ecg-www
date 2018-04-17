@@ -38,6 +38,9 @@
                     // labels: ["January", "February", "March", "April", "May", "June", "July"],
                     datasets: [{
                         label: "Heart Signal",
+                        borderColor: 'rgba(211,37,52,0.5)',
+                        radius: 0,
+                        fill: 0,
                         // backgroundColor: 'rgb(255, 99, 132)',
                         // borderColor: 'rgb(255, 99, 132)',
                         data: [/*0, 10, 5, 2, 20, 30, 45*/]
@@ -45,6 +48,9 @@
                 },
 
                 options: {
+                    legend: {
+                        display: false
+                    },
                     scales: {
                         xAxes: [{
                             type: 'realtime'
