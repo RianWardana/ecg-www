@@ -11,15 +11,6 @@
                 margin: 0;
                 font-family: 'Roboto', 'Noto', sans-serif;
                 background-color: #f7f7f7;
-                padding: 10vw;
-            }
-
-            body > * {
-                box-sizing: border-box;
-                margin-bottom: 10px;
-                width: 100%;
-                padding: 8px;
-                text-align: center;
             }
         </style>
         <script type="text/javascript" src="moment.min.js"></script>
@@ -35,38 +26,43 @@
                 type: 'line',
 
                 data: {
-                    // labels: ["January", "February", "March", "April", "May", "June", "July"],
                     datasets: [{
                         label: "Heart Signal",
                         borderColor: 'rgba(211,37,52,0.5)',
                         radius: 0,
                         fill: 0,
-                        // backgroundColor: 'rgb(255, 99, 132)',
-                        // borderColor: 'rgb(255, 99, 132)',
                         data: [/*0, 10, 5, 2, 20, 30, 45*/]
                     }]
                 },
 
                 options: {
+                    layout: {
+                        padding: {
+                            left: 0
+                        }
+                    },
                     legend: {
                         display: false
                     },
                     scales: {
+                        yAxes: [{
+                            display: false
+                        }],
                         xAxes: [{
                             type: 'realtime'
                         }]
                     },
                     plugins: {
                         streaming: {
-                            refresh: 100,
+                            refresh: 20,
                             duration: 10000,
                             frameRate: 30,
-                            delay: 500,
+                            delay: 0,
                             onRefresh: function(chart) {
                                 chart.data.datasets.forEach(function(dataset) {
                                     dataset.data.push({
                                         x: Date.now(),
-                                        y: Math.random()
+                                        y: Math.random()*200
                                     });
                                 });
                             }
