@@ -22,6 +22,7 @@
     <body>
         <canvas id="myChart"></canvas>
         <script>
+            ////////////////////////////////////////////////////////////////////////// setup database
             var config = {
                 apiKey: "AIzaSyBJS638LrDtlTwbRC8BZexAA4MUXR9E-hU",
                 authDomain: "hart-ecg.firebaseapp.com",
@@ -32,7 +33,18 @@
             };
             firebase.initializeApp(config);
             var database = firebase.database();
+            var ecgRef = database.ref('ecg');
 
+            var signalData = [];
+
+            ecgRef.orderByKey().startAt((Math.floor((new Date).getTime()/1000)).toString()).on('child_added', (childSnapshot, prevChildKey) => {
+                var newSignalLength = childSnapshot.val().length;
+                childSnapshot.val().forEach(signalValue => {
+                    signalData.unshift(signalValue);
+                });
+            });
+
+            ////////////////////////////////////////////////////////////////////////// setup graph
             var ctx = document.getElementById('myChart').getContext('2d');
             var chart = new Chart(ctx, {
                 type: 'line',
@@ -43,7 +55,7 @@
                         borderColor: 'rgba(211,37,52,0.5)',
                         radius: 0,
                         fill: 0,
-                        data: [/*0, 10, 5, 2, 20, 30, 45*/]
+                        data: []
                     }]
                 },
 
@@ -66,17 +78,15 @@
                     },
                     plugins: {
                         streaming: {
-                            refresh: 100,
+                            refresh: 20,
                             duration: 10000,
                             frameRate: 30,
-                            delay: 200,
+                            delay: 40,
                             onRefresh: function(chart) {
-                                // for (a = 0; a < 2; a++) {
-                                    chart.data.datasets[0].data.push({
-                                        x: Date.now() + 1800,
-                                        y: Math.random()*200
-                                    });   
-                                // }
+                                chart.data.datasets[0].data.push({
+                                    x: Date.now(),
+                                    y: signalData.pop()
+                                });
                             }
                         }
                     }
