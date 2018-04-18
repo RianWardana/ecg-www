@@ -107,7 +107,7 @@
                                 </div>
                                 <div class="card-body">
                                     <center>
-                                        <h1 class="card-title" style="margin: 0;">68</h1>
+                                        <h1 id="denyut" class="card-title" style="margin: 0;">68</h1>
                                     </center>
                                 </div>
                                 <div class="card-footer">
@@ -129,7 +129,7 @@
                                 </div>
                                 <div class="card-footer">
                                     <div class="stats">
-                                        Normal
+                                        <i class="now-ui-icons ui-2_like"></i> Normal
                                     </div>
                                 </div>
                             </div>
@@ -141,12 +141,112 @@
                                 </div>
                                 <div class="card-body">
                                     <center>
-                                        <h1 class="card-title" style="margin: 0;">19:08:78</h1>
+                                        <h1 id="waktu" class="card-title" style="margin: 0;"></h1>
                                     </center>
                                 </div>
                                 <div class="card-footer">
                                     <div class="stats">
                                         <i class="now-ui-icons objects_globe"></i> WIB
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div> <!-- END 1ST ROW -->
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="card card-task">
+                                <div class="card-header">
+                                    <h5 class="card-category">Ceklis</h5>
+                                    <h4 class="card-title">Kiat Menjaga Jantung</h4>
+                                </div>
+                                <div class="card-body">
+                                    <div class="table-full-width table-responsive">
+                                    <table class="table">
+                                    <tbody>
+                                        <tr>
+                                            <td>
+                                                <div class="form-check">
+                                                    <label class="form-check-label">
+                                                        <input class="form-check-input" type="checkbox">
+                                                        <span class="form-check-sign"></span>
+                                                    </label>
+                                                </div>
+                                            </td>
+                                            <td class="text-left">Jauhi rokok</td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <div class="form-check">
+                                                    <label class="form-check-label">
+                                                        <input class="form-check-input" type="checkbox">
+                                                        <span class="form-check-sign"></span>
+                                                    </label>
+                                                </div>
+                                            </td>
+                                            <td class="text-left">Olahraga 30 menit setiap hari</td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <div class="form-check">
+                                                    <label class="form-check-label">
+                                                        <input class="form-check-input" type="checkbox">
+                                                        <span class="form-check-sign"></span>
+                                                    </label>
+                                                </div>
+                                            </td>
+                                            <td class="text-left">Konsumsi makanan yang baik</td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <div class="form-check">
+                                                    <label class="form-check-label">
+                                                        <input class="form-check-input" type="checkbox">
+                                                        <span class="form-check-sign"></span>
+                                                    </label>
+                                                </div>
+                                            </td>
+                                            <td class="text-left">Pertahankan berat badan yang sehat</td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <div class="form-check">
+                                                    <label class="form-check-label">
+                                                        <input class="form-check-input" type="checkbox">
+                                                        <span class="form-check-sign"></span>
+                                                    </label>
+                                                </div>
+                                            </td>
+                                            <td class="text-left">Tidur cukup dan berkualitas</td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <div class="form-check">
+                                                    <label class="form-check-label">
+                                                        <input class="form-check-input" type="checkbox">
+                                                        <span class="form-check-sign"></span>
+                                                    </label>
+                                                </div>
+                                            </td>
+                                            <td class="text-left">Mengelola stres</td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <div class="form-check">
+                                                    <label class="form-check-label">
+                                                        <input class="form-check-input" type="checkbox">
+                                                        <span class="form-check-sign"></span>
+                                                    </label>
+                                                </div>
+                                            </td>
+                                            <td class="text-left">Lakukan pemeriksaan kesehatan secara teratur</td>
+                                        </tr>
+                                    </tbody>
+                                    </table>
+                                    </div>
+                                </div>
+                                <div class="card-footer">
+                                    <div class="stats">
+                                        <i class="now-ui-icons ui-1_zoom-bold"></i> kompas.com
                                     </div>
                                 </div>
                             </div>
@@ -167,6 +267,10 @@
             <script src="js/perfect-scrollbar.jquery.min.js"></script>
             <script src="js/now-ui-dashboard.min.js?v=1.0.1"></script>
             <script>
+                setInterval(function(){
+                    document.getElementById("denyut").innerHTML = Math.floor(Math.random()*99)+40;
+                    document.getElementById("waktu").innerHTML = (new Date()).toLocaleTimeString('en-ID', { hour12: false });
+                }, 1000);
                 ////////////////////////////////////////////////////////////////////////// setup database
                 var config = {
                     apiKey: "AIzaSyBJS638LrDtlTwbRC8BZexAA4MUXR9E-hU",
