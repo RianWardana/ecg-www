@@ -25,13 +25,17 @@
         });
     });
 
-    bpmRef.orderByKey().startAt((Math.floor((new Date).getTime()/1000)).toString()).on('child_added', (childSnapshot, prevChildKey) => {
+    bpmRef.orderByKey().startAt((Math.floor((new Date).getTime()/1000) - 5).toString()).on('child_added', (childSnapshot, prevChildKey) => {
         var bpm = childSnapshot.val();
         document.getElementById("denyut").innerHTML = bpm;
         if ((bpm < 40) || (bpm > 110)) {
+            document.getElementById("denyut").style.color = '#f44336';
+            document.getElementById("kondisi").style.color = "#f44336";
             document.getElementById("kondisi").innerHTML = '<h1 class="card-title" style="margin: 0;"><i class="now-ui-icons health_ambulance"></i></h1>';
             document.getElementById("kondisiStatus").innerHTML = '<i class="now-ui-icons ui-1_simple-remove"></i> Meninggal';
         } else {
+            document.getElementById("denyut").style.color = '#4caf50';
+            document.getElementById("kondisi").style.color = "#4caf50";
             document.getElementById("kondisi").innerHTML = '<h1 class="card-title" style="margin: 0;"><i class="now-ui-icons emoticons_satisfied"></i></h1>';
             document.getElementById("kondisiStatus").innerHTML = '<i class="now-ui-icons ui-2_like"></i> Normal';
         }
