@@ -86,15 +86,15 @@
             },
             plugins: {
                 streaming: {
-                    refresh: 50,
+                    refresh: 20,
                     duration: 10000,
                     frameRate: 30,
-                    delay: 100,
+                    delay: 40,
                     onRefresh: function(chart) {
                         chart.data.datasets[0].data.push({
                             x: Date.now(),
-                            // y: Math.random()
-                            y: signalData.pop()
+                            y: Math.random()
+                            // y: signalData.pop()
                         });
                     }
                 }
