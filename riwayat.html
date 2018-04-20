@@ -19,6 +19,22 @@
                 font-family: 'Roboto', 'Noto', sans-serif;
                 background-color: #f7f7f7;
             }
+
+			.chartWrapper {
+				position: relative;
+			}
+
+			.chartWrapper > canvas {
+				position: absolute;
+				left: 0;
+				top: 0;
+				pointer-events: none;
+			}
+
+			.chartAreaWrapper {
+				width: 15000px;
+				overflow-x: scroll;
+			}
         </style>
     </head>
 
@@ -103,12 +119,14 @@
             	</div>
 
             	<div class="content">
-            		<div class="card">
+            		<div id="elektrokardiogram" class="card" style="display:none;">
                         <div class="card-header">
-                            <h4 class="card-title">Elektrokardiogram</h4>
+                            <h4 class="card-title">Elektrokardiogram 5 Menit</h4>
                         </div>
-                        <div class="card-body" style="padding: 0;">
-                            <canvas id="myChart"></canvas>
+                        <div style="overflow-x: auto">
+                        	<div class="card-body" style="padding: 0; height: 300px; width: 30000px;">
+                        		<canvas id="myChart"></canvas>
+                        	</div>
                         </div>
                     </div>
                     <div class="row">
@@ -118,16 +136,42 @@
                                     <h5 class="card-category">Rentang Waktu</h5>
                                 </div>
                                 <div class="card-body">
+                                	<p style="margin-bottom: 0;">Waktu awal:</p>
                                 	<!-- <input type="text" class="form-control datetimepicker-input" id="datetimepicker5" data-toggle="datetimepicker" data-target="#datetimepicker5"/> -->
                                 	<!-- <input type='text' class="form-control" id='datetimepicker4' /> -->
+                                	<!-- <input class="form-control" type="datetime-local" id="example-datetime-local-input"> -->
+                                	<!-- <input type="date" name="bday" min="1000-01-01" max="3000-12-31" class="form-control"> -->
+                                	<!-- <input type="time" name="bday" min="1000-01-01" max="3000-12-31" class="form-control"> -->
+									<input type='text' class="form-control" id='datetimepicker4' />
+									<p style="margin-top: 30px; margin-bottom: 0;">Waktu akhir:</p>
+									<!-- <center> -->
+										<p style="margin-left: 20px; margin-top: 0; margin-bottom: 0;">5 menit setelah waktu awal</p>
+									<!-- </center> -->
                                 </div>
                                 <div class="card-footer">
-                                    <button class="btn btn-primary btn-block" onclick="">Terapkan</button>
+                                    <button id="terapkan" class="btn btn-primary btn-block" style="margin-bottom: 14px;">Terapkan</button>
                                 </div>
                             </div>
                         </div>
-                        <div class="col-lg-4">
-                            <div class="card card-chart">
+                        <div id="cardBpm" class="col-lg-4" style="display:none; height: 300px;">
+                            <div class="card card-chart" style="height: 185px;">
+                                <div class="card-header">
+                                    <h5 class="card-category">Denyut Jantung Rata-Rata</h5>
+                                </div>
+                                <div class="card-body">
+                                    <center>
+                                        <h1 id="denyut" class="card-title" style="margin: 0;">0</h1>
+                                    </center>
+                                </div>
+                                <div class="card-footer">
+                                    <div class="stats">
+                                        <i class="now-ui-icons ui-2_favourite-28"></i> BPM
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="cardKondisi" class="col-lg-4" style="display:none;">
+                            <div class="card card-chart" style="height: 185px;">
                                 <div class="card-header">
                                     <h5 class="card-category">Kondisi</h5>
                                 </div>
@@ -139,23 +183,6 @@
                                 <div class="card-footer">
                                     <div class="stats" id="kondisiStatus">
                                         <i class="now-ui-icons ui-2_like"></i> Normal
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-4">
-                            <div class="card card-chart">
-                                <div class="card-header">
-                                    <h5 class="card-category">Waktu</h5>
-                                </div>
-                                <div class="card-body">
-                                    <center>
-                                        <h1 id="waktu" class="card-title" style="margin: 0; color: #2196f3;"></h1>
-                                    </center>
-                                </div>
-                                <div class="card-footer">
-                                    <div class="stats">
-                                        <i class="now-ui-icons objects_globe"></i> WIB
                                     </div>
                                 </div>
                             </div>
@@ -178,9 +205,14 @@
         <script src="js/perfect-scrollbar.jquery.min.js"></script>
         <script src="js/now-ui-dashboard.min.js?v=1.0.1"></script>
 		
-		<!-- Tempus Dominicus -->
-        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.0.0-alpha14/js/tempusdominus-bootstrap-4.min.js"></script>
-  		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.0.0-alpha14/css/tempusdominus-bootstrap-4.min.css" />
+		<!-- Date Time Picker -->
+        <script src="js/bootstrap-datetimepicker.min.js"></script>
+		<link href="css/bootstrap-datetimepicker.min.css" rel="stylesheet" />
+		<script type="text/javascript">
+		$(function () {
+		$('#datetimepicker4').datetimepicker();
+		});
+		</script>
 
         <!-- Untuk Hart ECG -->
         <script src="js/ecg-riwayat.js"></script>

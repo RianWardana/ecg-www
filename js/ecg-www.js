@@ -52,7 +52,7 @@
         data: {
             datasets: [{
                 label: "Heart Signal",
-                borderColor: "#FFFFFF",
+                borderColor: "#16a085",
                 borderWidth: 2,
                 fill: true,
                 backgroundColor: gradientFill,
@@ -93,7 +93,7 @@
                     onRefresh: function(chart) {
                         chart.data.datasets[0].data.push({
                             x: Date.now(),
-                            // y: Math.random()
+                            // y: Math.floor(Math.random()*99)
                             y: signalData.pop()
                         });
                     }
