@@ -22,17 +22,40 @@
     ////////////////////////////////////////////////////////////////////////// setup graph
 
     document.getElementById("terapkan").onclick = function() {
-        document.getElementById("elektrokardiogram").style.display = "block";
-        document.getElementById("cardBpm").style.display = "block";
-        document.getElementById("cardKondisi").style.display = "block";
-        var a = 15000; //untuk 5 menit
-        while (a>0) {
-            var random = Math.floor(Math.random()*99);
-            myChart.data.labels.push(Date.now());
-            myChart.data.datasets[0].data.push(random);
-            a--;
+        // var a = 15000;
+        // while (a>0) {
+        //     var random = Math.floor(Math.random()*99);
+        //     myChart.data.labels.push(Date.now());
+        //     myChart.data.datasets[0].data.push(random);
+        //     a--;
+        // }
+        // myChart.update(0);
+        var counter = 0;
+        var date = document.getElementById("date").value;
+        var time = document.getElementById("time").value;
+        
+        if ((date == '') || (time == '')) {
+            alert('Tidak lengkap');
+        } else {
+            var epochStart = moment(`${date} ${time}`).unix();
+            var epochEnd = epochStart + 300;
+            document.getElementById("elektrokardiogram").style.display = "block";
+            document.getElementById("cardBpm").style.display = "block";
+            document.getElementById("cardKondisi").style.display = "block";
+
+            ecgRef.orderByKey().startAt(epochStart.toString()).endAt(epochEnd.toString()).once('value', seconds => {
+                seconds.forEach(second => {
+                    // console.log(second.val());
+                    second.val().forEach(sample => {
+                        myChart.data.labels.push(counter.toString());
+                        myChart.data.datasets[0].data.push(sample); 
+                        // console.log(`${counter}: ${sample}`);
+                        counter++;
+                    });
+                });
+                myChart.update(0);
+            });
         }
-        myChart.update(0);
     }
 
 
