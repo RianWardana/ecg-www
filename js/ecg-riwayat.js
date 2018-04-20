@@ -22,14 +22,6 @@
     ////////////////////////////////////////////////////////////////////////// setup graph
 
     document.getElementById("terapkan").onclick = function() {
-        // var a = 15000;
-        // while (a>0) {
-        //     var random = Math.floor(Math.random()*99);
-        //     myChart.data.labels.push(Date.now());
-        //     myChart.data.datasets[0].data.push(random);
-        //     a--;
-        // }
-        // myChart.update(0);
         var counter = 0;
         var date = document.getElementById("date").value;
         var time = document.getElementById("time").value;
@@ -45,15 +37,36 @@
 
             ecgRef.orderByKey().startAt(epochStart.toString()).endAt(epochEnd.toString()).once('value', seconds => {
                 seconds.forEach(second => {
-                    // console.log(second.val());
                     second.val().forEach(sample => {
                         myChart.data.labels.push(counter.toString());
-                        myChart.data.datasets[0].data.push(sample); 
-                        // console.log(`${counter}: ${sample}`);
+                        myChart.data.datasets[0].data.push(sample);
                         counter++;
                     });
                 });
                 myChart.update(0);
+            });
+
+            bpmRef.orderByKey().startAt(epochStart.toString()).endAt(epochEnd.toString()).once('value', seconds => {
+                var total = 0;
+                var count = 0;
+                var bpm = 0;
+                seconds.forEach(second => {
+                    total = total + parseInt(second.val());
+                    count++;
+                });
+                bpm = Math.floor(total / count);
+                document.getElementById("denyut").innerHTML = bpm;
+                if ((bpm < 40) || (bpm > 110)) {
+                    document.getElementById("denyut").style.color = '#f44336';
+                    document.getElementById("kondisi").style.color = "#f44336";
+                    document.getElementById("kondisi").innerHTML = '<h1 class="card-title" style="margin: 0;"><i class="now-ui-icons health_ambulance"></i></h1>';
+                    document.getElementById("kondisiStatus").innerHTML = '<i class="now-ui-icons ui-1_simple-remove"></i> Kritis';
+                } else {
+                    document.getElementById("denyut").style.color = '#4caf50';
+                    document.getElementById("kondisi").style.color = "#4caf50";
+                    document.getElementById("kondisi").innerHTML = '<h1 class="card-title" style="margin: 0;"><i class="now-ui-icons emoticons_satisfied"></i></h1>';
+                    document.getElementById("kondisiStatus").innerHTML = '<i class="now-ui-icons ui-2_like"></i> Normal';
+                }
             });
         }
     }
