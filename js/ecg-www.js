@@ -93,8 +93,8 @@
                     onRefresh: function(chart) {
                         chart.data.datasets[0].data.push({
                             x: Date.now(),
-                            y: Math.random()
-                            // y: signalData.pop()
+                            // y: Math.random()
+                            y: signalData.pop()
                         });
                     }
                 }
